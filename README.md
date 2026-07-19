@@ -1,3 +1,5 @@
+<img src="./의지의%20현판.svg" alt="의지의 현판" width="300">
+
 # kw-competition-practice
 2026 경운대학교 지능형모빌리티 소프트웨어 경진대회(7.20 - 7.21)
 
