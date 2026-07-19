@@ -2,7 +2,7 @@
 
 **Session ID:** ses_0875fea0fffesS6xDy1DQTbP4G
 **Created:** 2026. 7. 19. 오후 1:26:25
-**Updated:** 2026. 7. 19. 오후 1:29:14
+**Updated:** 2026. 7. 19. 오후 1:58:49
 
 ---
 
@@ -6655,6 +6655,846 @@ df2 = pd.read_csv('weather.csv')
 ---
 
 **지금 당장 실행해봐라.** 막히면 "어디까지 했는데 여기서 안된다"고 말해라. 
+
+---
+
+## User
+
+# Q2-3: 감독(director)별 작품 수 TOP5 출력
+df['director'].value_counts().head(5)
+
+키에러?? 한번 ipynb파일 확인해! 오늘자
+
+---
+
+## Assistant (Build · DeepSeek V4 Flash Free · 6.6s)
+
+_Thinking:_
+
+The user is getting a KeyError when trying to run `df['director'].value_counts().head(5)`. Let me check the netflix.csv to see what columns it actually has. I already saw the first 3 lines earlier:
+
+```
+title,director,date_added,type
+Alias Grace,,3-Nov-17,TV Show
+A Patch of Fog,Michael Lennox,15-Apr-17,Movie
+```
+
+Wait, that shows `director` column exists. But let me read more carefully - the user says "키에러?? 한번 ipynb파일 확인해! 오늘자" - they want me to check the 오늘자 (today's) ipynb file, which is `20260719-일요실습1.ipynb`.
+
+Let me check what's in the 20260719 notebook more carefully to see if they wrote something there that's causing the error. Actually, I already read that file and it was mostly empty cells with just the copied content from 0704.
+
+But wait - the user said they're getting a KeyError. Let me check the netflix.csv column names more carefully. Maybe the column name is slightly different due to encoding issues or spaces.
+
+Actually, I already checked it:
+```
+title,director,date_added,type
+Alias Grace,,3-Nov-17,TV Show
+A Patch of Fog,Michael Lennox,15-Apr-17,Movie
+```
+
+The column `director` exists. But maybe the user is running it differently. Let me check the 20260719 notebook to see if they started working on these problems there.
+
+**Tool: bash**
+
+**Input:**
+```json
+{
+  "command": "Get-Content \"C:\\Users\\Administrator\\Documents\\GitHub\\kw-competition-practice\\netflix.csv\" -First 1"
+}
+```
+
+**Output:**
+```
+title,director,date_added,type
+
+```
+
+**Tool: bash**
+
+**Input:**
+```json
+{
+  "command": "Get-Content \"C:\\Users\\Administrator\\Documents\\GitHub\\kw-competition-practice\\20260719-일요실습1.ipynb\" -Raw | Select-String -Pattern \"netflix|director|value_counts\" -CaseSensitive:$false"
+}
+```
+
+**Output:**
+```
+
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "da038d0d-24b2-4142-b671-105493364a05",
+   "metadata": {},
+   "source": [
+    "# **20260704-?�요?�습1** (?�실 0704 ?�요?�습 ?�일 그�?�?복사?�것...) (?�늘??19?�데 별로 ?�했??�?..
+)\n",
+    "## 문제�??�을?? ?�반글�?같이 ?�쪽?�서 ?�른쪽으�?차근???�어??�??�서?��?명령?��? 조합?�면 ?��
+��??구문코드가 ?�성?�는것이??"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6f2d32c7-bcb2-4dfd-9c3d-3764e22d84f3",
+   "metadata": {},
+   "source": [
+    "### 먼�? ?�체�?출력"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "8caf9f3c-157d-4757-876e-d7f9c9daf2b5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt\n",
+    "plt.rc('font', family='Malgun Gothic')\n",
+    "\n",
+    "df = pd.read_csv('iris.csv')\n",
+    "\n",
+    "# Q1-1: ?�이??구조 ?�악 (???? ???? 컬럼�? ?�이???�??\n",
+    "# ?�트: .shape, .info()\n",
+    "\n",
+    "# Q1-2: �?species)별로 sepal_length???�균 출력\n",
+    "# ?�트: groupby('species')['sepal_length'].mean()\n",
+    "\n",
+    "# Q1-3: 종별 sepal_length, petal_length???�균??막�?그래?�로\n",
+    "# ?�트: groupby('species')[['sepal_length','petal_length']].mean().plot(kind='bar')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "60249f8f-2e7c-4c36-a366-aa1e299f48ad",
+   "metadata": {},
+   "source": [
+    "### 문제 1 ??iris (?�이?? ??"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "610f7fcc-10d3-42a8-b2dc-d77383a1ee02",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "<class 'pandas.core.frame.DataFrame'>\n",
+      "RangeIndex: 150 entries, 0 to 149\n",
+      "Data columns (total 5 columns):\n",
+      " #   Column        Non-Null Count  Dtype  \n",
+      "---  ------        --------------  -----  \n",
+      " 0   sepal_length  150 non-null    float64\n",
+      " 1   sepal_width   150 non-null    float64\n",
+      " 2   petal_length  150 non-null    float64\n",
+      " 3   petal_width   150 non-null    float64\n",
+      " 4   species       150 non-null    object \n",
+      "dtypes: float64(4), object(1)\n",
+      "memory usage: 6.0+ KB\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Q1-1: ?�이??구조 ?�악 (???? ???? 컬럼�? ?�이???�??\n",
+    "df.info()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "025d126d-9155-413c-95f7-c674320901c8",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>sepal_length</th>\n",
+       "      <th>sepal_width</th>\n",
+       "      <th>petal_length</th>\n",
+       "      <th>petal_width</th>\n",
+       "      <th>species</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>5.1</td>\n",
+       "      <td>3.5</td>\n",
+       "      <td>1.4</td>\n",
+       "      <td>0.2</td>\n",
+       "      <td>setosa</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>4.9</td>\n",
+       "      <td>3.0</td>\n",
+       "      <td>1.4</td>\n",
+       "      <td>0.2</td>\n",
+       "      <td>setosa</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>4.7</td>\n",
+       "      <td>3.2</td>\n",
+       "      <td>1.3</td>\n",
+       "      <td>0.2</td>\n",
+       "      <td>setosa</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>4.6</td>\n",
+       "      <td>3.1</td>\n",
+       "      <td>1.5</td>\n",
+       "      <td>0.2</td>\n",
+       "      <td>setosa</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>5.0</td>\n",
+       "      <td>3.6</td>\n",
+       "      <td>1.4</td>\n",
+       "      <td>0.2</td>\n",
+       "      <td>setosa</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>145</th>\n",
+       "      <td>6.7</td>\n",
+       "      <td>3.0</td>\n",
+       "      <td>5.2</td>\n",
+       "      <td>2.3</td>\n",
+       "      <td>virginica</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>146</th>\n",
+       "      <td>6.3</td>\n",
+       "      <td>2.5</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>1.9</td>\n",
+       "      <td>virginica</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>147</th>\n",
+       "      <td>6.5</td>\n",
+       "      <td>3.0</td>\n",
+       "      <td>5.2</td>\n",
+       "      <td>2.0</td>\n",
+       "      <td>virginica</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>148</th>\n",
+       "      <td>6.2</td>\n",
+       "      <td>3.4</td>\n",
+       "      <td>5.4</td>\n",
+       "      <td>2.3</td>\n",
+       "      <td>virginica</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>149</th>\n",
+       "      <td>5.9</td>\n",
+       "      <td>3.0</td>\n",
+       "      <td>5.1</td>\n",
+       "      <td>1.8</td>\n",
+       "      <td>virginica</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>150 rows × 5 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     sepal_length  sepal_width  petal_length  petal_width    species\n",
+       "0             5.1          3.5           1.4          0.2     setosa\n",
+       "1             4.9          3.0           1.4          0.2     setosa\n",
+       "2             4.7          3.2           1.3          0.2     setosa\n",
+       "3             4.6          3.1           1.5          0.2     setosa\n",
+       "4             5.0          3.6           1.4          0.2     setosa\n",
+       "..            ...          ...           ...          ...        ...\n",
+       "145           6.7          3.0           5.2          2.3  virginica\n",
+       "146           6.3          2.5           5.0          1.9  virginica\n",
+       "147           6.5          3.0           5.2          2.0  virginica\n",
+       "148           6.2          3.4           5.4          2.3  virginica\n",
+       "149           5.9          3.0           5.1          1.8  virginica\n",
+       "\n",
+       "[150 rows x 5 columns]"
+      ]
+     },
+     "execution_count": 12,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# df?��???보기\n",
+    "df"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "096fda31-c316-4d41-843f-9d34154e21db",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "species\n",
+       "setosa        5.006\n",
+       "versicolor    5.936\n",
+       "virginica     6.588\n",
+       "Name: sepal_length, dtype: float64"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Q1-2: �?species)별로 sepal_length???�균 출력\n",
+    "df.groupby('species')['sepal_length'].mean()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "5051ee04-b79c-4b25-bff7-26aa3742cbf9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<Axes: xlabel='species'>"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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
+Cm6d+9ewGnA98mOwNUfReLWW2+NjRs3RsT7Z90PGTIkRowY4Qx8Cmbbtm1xzTXXRK9evaK8vDz69u0b3/ve9wo9FiXM98nCc05Fkdq6dWts377d/w4pmOuu
+uy5eeOGF+P73v9+y3Hz11VfHSSedFFdccUWhxwPfJwtAVBSJZ555JoYMGRJ77713NDc3x2233RaNjY3xzW9+018YCmLo0KHxwgsvRHl5ecu2d955J4499th
+45ZVXCjgZpWrKlCnxpS99KYYPH96ybcmSJbFo0aK48sorCzhZ6RAVRWLAgAGxbNmy6NGjR9x6663xn//5n/HpT3863nvvvZg5c2ahx6MEDR48OFauXLnD9o
+EDB8bq1asLMBGlrrKyMurr61tty+VyMXToUPdU2UWcqFkkOnfuHD169Iimpqa4/fbb4+mnn44BAwbE/vvvX+jRKFF77713vPLKK3HQQQe1bHv55ZejZ8+eh
+RuKkrbHHnvssK2srCy2bt1agGlKkxM1i0T//v1j4cKFceutt8aIESOiuro6ysrK4p133in0aJSoG264IU499dS4++6746mnnop77rknTj/99Jg6dWqhR6NE
+HX744XHvvfe22vbwww/H4MGDCzRR6XH4o0g8++yzcf7550fXrl3j0UcfjSFDhsSiRYvi+uuvj9/97neFHo8StXjx4pgxY0asXLkyqqqqYsKECXHaaacVeix
+K1Nq1a+Mzn/lMHHHEEXHwwQfHypUr47HHHovHH388jjzyyEKPVxJERRH74I+urKyswJMAdAyNjY0xc+bMqK2tjX79+sVFF13U6p4qtC9RUUTeeOON+OUvfx
+l1dXUxaNCguPDCCx2/Zpd68MEHP9Z+559/fjtPAnREoqJIvPDCCzF27Ng48cQTY/DgwbF69ep45pln4te//nXst99+hR6PEnHCCSd85D5lZWWxaNGiXTANv
+H+/lJtvvjkiIr7xjW/8zf1+/OMf76qRSpqrP4rE5MmT47777mt1vPrRRx+NSZMmxbx58wo4GaXkySefLPQI0Mr/vfqob9++BZyECCsVRaOmpibWrFmzw/b9
+9tvP9dcUzNatW2PBggUth+Q++9nPRufO/q8CpUpUFIlhw4bFsmXLWn3DbmpqiiFDhnxobEB7e/XVV+Okk06Kvffeu+WQ3JYtW+KJJ56IffbZp9DjUaJWr14
+dL730Urz77ruttn/xi18s0ESlRVQUiW984xvRrVu3+Jd/+Zfo1KlT5HK5+OY3vxlvvPFG3H///YUejxJ0+umnx2mnnRaXXXZZy7af/exn8dRTT8UDDzxQwM
+koVXfeeWdMmjQpDj300OjVq1fL9rKysnjssccKOFnpEBVFYuPGjXHOOefEihUrYsiQIbFq1aro169fPPLII7H33nsXejxK0N86JDd06NBYsWLFrh+IkldVV
+RXz5s2Lww47rNCjlCwHP4tERUVFLFy4MF566aWWGw0deeSR0amTm6JSGLvvvvsO23K5XGSz2QJMA++/JgVFYfkXqUhccMEFERFx2GGHxXnnnRdHHXVU5HK5
+uPTSSws8GaXqyCOPjB/84Aettt1xxx1x+OGHF2YgSt7pp58ev/rVrwo9Rklz+KNIDBo0KFatWtVqW319fYwYMSJee+21Ak1FKauvr48xY8ZERUVFDB8+PFa
+sWBH19fWxaNGiGDhwYKHHowSNHz8+HnrooTjuuOOif//+rT7nPhW7hsMfHdzBBx8cf/zjHyObze7wDnzZbDauvvrqAk1GqausrIzf//738eijj8bKlStj7N
+ixcdppp0X37t0LPRolqn///jFx4sRCj1HSrFR0cOvXr49NmzbFscceG08//XSrz/Xq1SvKy8sLNBml7tlnn43q6upWl4+uW7cuNmzYEAceeGABJwMKRVQUi
+blz58aZZ55Z6DGgRU1NTSxZsiQqKipatq1fvz7Gjh0bL774YgEno5Q899xzMXLkyJYf/y0f7EP7EhVFZP78+TF79uzYuHFjzJkzJ1atWhWZTGaHY4ewKwwc
+ODBWr179sbdDexg3blz8x3/8R0TE3zyXp6ysbIdz0mgfrv4oErfddltcf/31ccQRR8Tzzz8fERENDQ1x+eWXF3gySlXv3r2jtra21ba1a9dGJpMp0ESUog+
+CIuL9u2l+2ENQ7DqiokjcfffdsXjx4pgwYULLrboPPfTQWLp0aYEno1RNmTIlzjjjjHjkkUdizZo1sWjRojj77LNb3WETKC2u/igSTU1NrY5df2Dr1q0FmA
+YizjnnnIiI+M53vhO1tbVRWVkZl112mbPvKZiBAwdGWVnZDtu7d+8eQ4YMiQkTJsSYMWMKMFnpsFJRJI455pi4+eabIyJa/tLcfffdzrKnoM4555x4/vnno
+7GxMZYvXx5XXXXVh35Th13hn/7pn6KysjJ+/OMfx6xZs+Lmm2+OvfbaK6655po4+eST4ytf+UrMmTOn0GN+ojlRs0hs2LAhzj777Fi7dm28/vrrMXz48Ni6
+dWvMnz8/Bg0aVOjxKBHOtKcjO/TQQ2PhwoWx1157tWxbs2ZNjB8/PhYsWBBLliyJr371q3/3tcvOERVFYsuWLdGlS5dYsmRJrFq1KvbZZ5/Ytm1bjB49utC
+jUUKcaU9HVllZGfX19Ttsr66ujj/96U8R8eF3JyYd51QUicMOOyyeeOKJGDFiRPz5z3+Os88+O/r27RsXXXRRTJ06tdDjUSL++kx76Ej69+8fjz32WJxyyi
+kt25555plWdyPetm1bIUYrGaKiSGzevDmqq6sjIuLb3/52zJ07N0aMGBEjRowQFRTEli1bYvfdd4/ddtstIqLl3IoTTzyxwJNRqmbMmBFnn312jB49Og444
+ICoq6uLhx56KP71X/81IiKeeuqpGD58eIGn/GRzomaR6NmzZ7z11luxYMGC2G233eKYY46Jrl27RkNDQ6FHo0Qddthh8ec//zki3r/j68knnxyXX355TJs2
+rcCTUao+85nPRG1tbRx99NHxl7/8JSorK+O3v/1ty5VKhxxySDz44IMFnvKTzTkVReK+++6LSZMmxXvvvRezZ8+Oz372s7FixYo488wz4w9/+EOhx6MEDRg
+wINauXRsR7wfGj370o5bVs2XLlhV4OkrRsGHDYvny5YUeo6Q5/FEkLrnkkjjuuOOic+fOMWDAgIiI6NatW8yePbvAk1GqPlg9e/HFF1tWzyLC6hkF07t371
+i/fn3svffehR6lZImKIvLXl45WVVUVaBKIuOqqq2Lo0KEtq2cREStWrIg999yzwJNRqs4999w4+eST4/Of/3xUV1dHp07//wj/+eefX8DJSofDH0CbrVq1q
+tXqWV1dXTQ2NsYBBxxQ4MkoRSeccMKHbi8rK4tFixbt4mlKk6gA2mT06NGxcOHCQo8BdCCu/gDaZMOGDbF58+ZCj0GJ27RpU6FH4P+wUgG0yT333BOzZ8+O
+Sy65ZIfj127Tza7yf1fMunXrtsN7z+RyuSgrKxPAu4ioANrEbbrpCDZs2BC9evWKiIhp06bFmDFjom/fvjvs98HNA2lfogKAT4RLL700HnnkkRg9enR8/et
+fj1GjRhV6pJIjKoA2y2az8d///d/xl7/8JT7/+c8XehyIzZs3x0MPPRT33XdfvP766zF+/Pi45JJLWlYzaF+iAmiTl156Kc4666zo06dPrF27Nt54442YN2
+9eLFmyJK6//vpCjwexevXq+Na3vhXz5893Qucu4uoPoE0mTJgQP//5z+P5559veRfIk08+OWbNmlXgySh1S5cujSlTpsQJJ5wQ9fX1ceeddxZ6pJLhjppAm
+7z22mst70j6wRn3Xbp0iS1bthRyLErYLbfcEg888EC8+eab8cUvfjEWLFgQQ4cOLfRYJUVUAG3Sp0+fePnll+Pggw9u2bZixYro3r17AaeilD399NNx0003
+xWmnnRa77bZboccpSaICaJNbb701TjrppPj6178emzZtih/+8Idx++23x80331zo0ShR8+bNK/QIJc85FUCbPP300zF37tx4880344gjjohXXnkl7r///rj
+wwgsLPRpQIFYqgDZZsWJF3HbbbTF69Oi4+uqr/+abOQGlwyWlQJu5JwDwf4kKIAn3BAAc/gB2ytKlS+Pf//3fY9asWVFVVeWeAFDCRAXQJu4JAPw1hz+ANj
+njjDPiH//xH90TAGghKgCAJNynAgBIQlQAAEmICgAgCVEBACQhKoB2d9VVV8XDDz9c6DGAdubqDwAgCSsVAEASogJK1H333RcHHXRQVFVVxdChQ2PTpk1RU
+1MTs2fPjpNOOikGDBgQw4cPj1/+8pctP2f79u1x4403xrBhw2LgwIHxla98pdX7fLz88ssxduzYGDRoUPTr1y/uuOOOiIgYNWpU/OIXv2jZb86cOXHIIYdE
+TU1NjBkzJlatWtXyuVtuuSX233//6N+/fxx99NG74HcCSCYHlJw//vGPuV69euXeeOONXC6Xy61atSq3bdu2XHV1dW7kyJG5lStX5nK5XO65557LlZeX537
+/+9/ncrlc7rrrrsudeuqpucbGxlxTU1PukksuyV155ZW5XC6X+9Of/pTr3bt3bu7cublcLpd77733crW1tblcLpc7/vjjc7NmzcrlcrncwoULcwMHDmx5jn
+vvvTc3YsSIXHNzc27hwoW5oUOH5t59991cLpfLLV++fBf9jgApWKmAEtS5c+fYtm1b/M///E9ERAwcODC6dOkSERETJ06MQYMGRUTEkUceGRdeeGHMmTMnc
+rlc3H777XHHHXfEnnvuGbvttltMmjQpZs+eHRERP/zhD+Oiiy6KM844o+U5hg0btsNzf//734/rr7++5Tm+/OUvx5o1a2LNmjWRyWRiw4YNsWzZsogI7yUC
+RUZUQAmqrq6O2bNnx7XXXhuHHHJIqyszBg4c2GrfPn36xFtvvRXr16+PxsbGOOGEE6KmpiZqamri1FNPjXfffTciImpra+Pggw/+yOdetWpVTJ06teVr1NT
+URC6Xi9dffz2OOeaYmDFjRlx88cVx7LHHxm9+85ukv26gfXmXUihRn/vc5+Jzn/tc/Pa3v42zzjor+vXrFxERb731Vqv9/vd//zeOOeaY6N27d2QymXjppZ
+eiV69eO3y9fv36tTo34m+prKyMadOmxVlnnfWhn7/oooti3LhxMXfu3DjllFOitrY29t133/x/gcAuZ6UCStDatWtj+fLlEfH+IY4+ffpEY2NjRERMmzYt1
+q9fHxERjz76aCxevDguvvji6NSpU1x00UVx9dVXx5YtWyIior6+Pv7rv/4rIiK++tWvxk9+8pOW1YVsNhtLly7d4bm/9KUvxc033xzr1q2LiIjNmzfHY489
+FhERf/jDH2LdunVRVlYWxx9/fGQymdi6dWs7/k4AKVmpgBLU2NgY5557bjQ2NkZ5eXmMGzcuxowZExER5557bowePTo2bNgQNTU1sWDBgujdu3dERPzgBz+
+IyZMnx7Bhw6JLly7Rt2/fmD59ekREjBw5Mh544IGYNGlSvPbaa7HHHnvEt7/97TjwwANbPfcXvvCFePPNN2PUqFHx3nvvRffu3ePyyy+PiIjXXnstTjnllN
+i+fXuUl5fH9OnTY8iQIbvwdwbYGW5+BbSoqamJX/ziFy7lBNrE4Q8AIAlRAQAk4fAHAJCElQoAIAlRAQAkISoAgCREBQCQhKgAAJIQFQBAEqICAEhCVAAAS
+fw/dGcW69LAGRoAAAAASUVORK5CYII=",
+      "text/plain": [
+       "<Figure size 640x480 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# Q1-3: 종별 sepal_length, petal_length???�균??막�?그래?�로\n",
+    "df.groupby('species')['sepal_length'].mean().plot(kind='bar')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8e56fbc6-b2af-4c0b-b6d7-a37d230f0200",
+   "metadata": {},
+   "source": [
+    "### 문제 2 ??netflix (?�이?? ??"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "d7264b5b-8d76-4565-ba84-a0e288507958",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>title</th>\n",
+       "      <th>director</th>\n",
+       "      <th>date_added</th>\n",
+       "      <th>type</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Alias Grace</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>3-Nov-17</td>\n",
+       "      <td>TV Show</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>A Patch of Fog</td>\n",
+       "      <td>Michael Lennox</td>\n",
+       "      <td>15-Apr-17</td>\n",
+       "      <td>Movie</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Lunatics</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>19-Apr-19</td>\n",
+       "      <td>TV Show</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Uriyadi 2</td>\n",
+       "      <td>Vijay Kumar</td>\n",
+       "      <td>2-Aug-19</td>\n",
+       "      <td>Movie</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Shrek the Musical</td>\n",
+       "      <td>Jason Moore</td>\n",
+       "      <td>29-Dec-13</td>\n",
+       "      <td>Movie</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>...</th>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "      <td>...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5832</th>\n",
+       "      <td>The Pursuit</td>\n",
+       "      <td>John Papola</td>\n",
+       "      <td>7-Aug-19</td>\n",
+       "      <td>Movie</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5833</th>\n",
+       "      <td>Hurricane Bianca</td>\n",
+       "      <td>Matt Kugelman</td>\n",
+       "      <td>1-Jan-17</td>\n",
+       "      <td>Movie</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5834</th>\n",
+       "      <td>Amar's Hands</td>\n",
+       "      <td>Khaled Youssef</td>\n",
+       "      <td>26-Apr-19</td>\n",
+       "      <td>Movie</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5835</th>\n",
+       "      <td>Bill Nye: Science Guy</td>\n",
+       "      <td>Jason Sussberg</td>\n",
+       "      <td>25-Apr-18</td>\n",
+       "      <td>Movie</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5836</th>\n",
+       "      <td>Age of Glory</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>TV Show</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "<p>5837 rows × 4 columns</p>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                      title        director date_added     type\n",
+       "0               Alias Grace             NaN   3-Nov-17  TV Show\n",
+       "1            A Patch of Fog  Michael Lennox  15-Apr-17    Movie\n",
+       "2                  Lunatics             NaN  19-Apr-19  TV Show\n",
+       "3                 Uriyadi 2     Vijay Kumar   2-Aug-19    Movie\n",
+       "4         Shrek the Musical     Jason Moore  29-Dec-13    Movie\n",
+       "...                     ...             ...        ...      ...\n",
+       "5832            The Pursuit     John Papola   7-Aug-19    Movie\n",
+       "5833       Hurricane Bianca   Matt Kugelman   1-Jan-17    Movie\n",
+       "5834           Amar's Hands  Khaled Youssef  26-Apr-19    Movie\n",
+       "5835  Bill Nye: Science Guy  Jason Sussberg  25-Apr-18    Movie\n",
+       "5836           Age of Glory             NaN        NaN  TV Show\n",
+       "\n",
+       "[5837 rows x 4 columns]"
+      ]
+     },
+     "execution_count": 9,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# df불러??n",
+    "df1 = pd.read_csv('netflix.csv')\n",
+    "df1"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "ff1be136-9bfb-4496-a7d5-815493f1745d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<bound method DataFrame.value_counts of                       title        director date_added     type\n",
+       "0               Alias Grace             NaN   3-Nov-17  TV Show\n",
+       "1            A Patch of Fog  Michael Lennox  15-Apr-17    Movie\n",
+       "2                  Lunatics             NaN  19-Apr-19  TV Show\n",
+       "3                 Uriyadi 2     Vijay Kumar   2-Aug-19    Movie\n",
+       "4         Shrek the Musical     Jason Moore  29-Dec-13    Movie\n",
+       "...                     ...             ...        ...      ...\n",
+       "5832            The Pursuit     John Papola   7-Aug-19    Movie\n",
+       "5833       Hurricane Bianca   Matt Kugelman   1-Jan-17    Movie\n",
+       "5834           Amar's Hands  Khaled Youssef  26-Apr-19    Movie\n",
+       "5835  Bill Nye: Science Guy  Jason Sussberg  25-Apr-18    Movie\n",
+       "5836           Age of Glory             NaN        NaN  TV Show\n",
+       "\n",
+       "[5837 rows x 4 columns]>"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Q2-1: type(TV Show / Movie)�?개수 ?�기\n",
+    "df1.value_counts"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "e5ce66f9-4235-46d7-a694-400373201131",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0                 Alias Grace\n",
+       "2                    Lunatics\n",
+       "7                      7SEEDS\n",
+       "9                         You\n",
+       "15                     Loaded\n",
+       "16           The Family Court\n",
+       "25                 After Life\n",
+       "26              Miss Dynamite\n",
+       "27                     Dollar\n",
+       "28    Easy Fortune Happy Life\n",
+       "Name: title, dtype: object"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Q2-2: TV Show�?뽑아??title 출력 (?�위 10�?\n",
+    "df1[df1['type'] == 'TV Show']['title'].head(10)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "48cb9bed-5a22-4bc9-8763-233dc6ee9c48",
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "KeyError",
+     "evalue": "'director'",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[1;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[1;31mKeyError\u001b[0m                                  Traceback (most recent call last)",
+      "File \u001b[1;32mC:\\ProgramData\\anaconda3\\Lib\\site-packages\\pandas\\core\\indexes\\base.py:3805\u001b[0m, i
+n \u001b[0;36mIndex.get_loc\u001b[1;34m(self, key)\u001b[0m\n\u001b[0;32m   3804\u001b[0m \u001b[38;5;28;01mtry\u001b[3
+9;00m:\n\u001b[1;32m-> 3805\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5
+;241m.\u001b[39m_engine\u001b[38;5;241m.\u001b[39mget_loc(casted_key)\n\u001b[0;32m   3806\u001b[0m \u001b[38;5;28;01me
+xcept\u001b[39;00m \u001b[38;5;167;01mKeyError\u001b[39;00m \u001b[38;5;28;01mas\u001b[39;00m err:\n",
+      "File \u001b[1;32mindex.pyx:167\u001b[0m, in \u001b[0;36mpandas._libs.index.IndexEngine.get_loc\u001b[1;34m()\u00
+1b[0m\n",
+      "File \u001b[1;32mindex.pyx:196\u001b[0m, in \u001b[0;36mpandas._libs.index.IndexEngine.get_loc\u001b[1;34m()\u00
+1b[0m\n",
+      "File \u001b[1;32mpandas\\\\_libs\\\\hashtable_class_helper.pxi:7081\u001b[0m, in \u001b[0;36mpandas._libs.hashta
+ble.PyObjectHashTable.get_item\u001b[1;34m()\u001b[0m\n",
+      "File \u001b[1;32mpandas\\\\_libs\\\\hashtable_class_helper.pxi:7089\u001b[0m, in \u001b[0;36mpandas._libs.hashta
+ble.PyObjectHashTable.get_item\u001b[1;34m()\u001b[0m\n",
+      "\u001b[1;31mKeyError\u001b[0m: 'director'",
+      "\nThe above exception was the direct cause of the following exception:\n",
+      "\u001b[1;31mKeyError\u001b[0m                                  Traceback (most recent call last)",
+      "Cell \u001b[1;32mIn[16], line 2\u001b[0m\n\u001b[0;32m      1\u001b[0m \u001b[38;5;66;03m# Q2-3: 감독(director
+)�??�품 ??TOP5 출력\u001b[39;00m\n\u001b[1;32m----> 2\u001b[0m df[\u001b[38;5;124m'\u001b[39m\u001b[38;5;124mdirect
+or\u001b[39m\u001b[38;5;124m'\u001b[39m]\u001b[38;5;241m.\u001b[39mvalue_counts()\u001b[38;5;241m.\u001b[39mhead(\u001b
+[38;5;241m5\u001b[39m)\n",
+      "File \u001b[1;32mC:\\ProgramData\\anaconda3\\Lib\\site-packages\\pandas\\core\\frame.py:4102\u001b[0m, in \u001b
+[0;36mDataFrame.__getitem__\u001b[1;34m(self, key)\u001b[0m\n\u001b[0;32m   4100\u001b[0m \u001b[38;5;28;01mif\u001b[39
+;00m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mcolumns\u001b[38;5;241m.\u001b[39mnlevels \u001b[38;5;241m
+>\u001b[39m \u001b[38;5;241m1\u001b[39m:\n\u001b[0;32m   4101\u001b[0m     \u001b[38;5;28;01mreturn\u001b[39;00m \u001b
+[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_getitem_multilevel(key)\n\u001b[1;32m-> 4102\u001b[0m indexer \u001b
+[38;5;241m=\u001b[39m \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39mcolumns\u001b[38;5;241m.\u001b[39mget_loc
+(key)\n\u001b[0;32m   4103\u001b[0m \u001b[38;5;28;01mif\u001b[39;00m is_integer(indexer):\n\u001b[0;32m   4104\u001b[0
+m     indexer \u001b[38;5;241m=\u001b[39m [indexer]\n",
+      "File \u001b[1;32mC:\\ProgramData\\anaconda3\\Lib\\site-packages\\pandas\\core\\indexes\\base.py:3812\u001b[0m, i
+n \u001b[0;36mIndex.get_loc\u001b[1;34m(self, key)\u001b[0m\n\u001b[0;32m   3807\u001b[0m     \u001b[38;5;28;01mif\u001
+b[39;00m \u001b[38;5;28misinstance\u001b[39m(casted_key, \u001b[38;5;28mslice\u001b[39m) \u001b[38;5;129;01mor\u001b[39
+;00m (\n\u001b[0;32m   3808\u001b[0m         \u001b[38;5;28misinstance\u001b[39m(casted_key, abc\u001b[38;5;241m.\u001b
+[39mIterable)\n\u001b[0;32m   3809\u001b[0m         \u001b[38;5;129;01mand\u001b[39;00m \u001b[38;5;28many\u001b[39m(\u
+001b[38;5;28misinstance\u001b[39m(x, \u001b[38;5;28mslice\u001b[39m) \u001b[38;5;28;01mfor\u001b[39;00m x \u001b[38;5;1
+29;01min\u001b[39;00m casted_key)\n\u001b[0;32m   3810\u001b[0m     ):\n\u001b[0;32m   3811\u001b[0m         \u001b[38;
+5;28;01mraise\u001b[39;00m InvalidIndexError(key)\n\u001b[1;32m-> 3812\u001b[0m     \u001b[38;5;28;01mraise\u001b[39;00
+m \u001b[38;5;167;01mKeyError\u001b[39;00m(key) \u001b[38;5;28;01mfrom\u001b[39;00m\u001b[38;5;250m \u001b[39m\u001b[38
+;5;21;01merr\u001b[39;00m\n\u001b[0;32m   3813\u001b[0m \u001b[38;5;28;01mexcept\u001b[39;00m \u001b[38;5;167;01mTypeEr
+ror\u001b[39;00m:\n\u001b[0;32m   3814\u001b[0m     \u001b[38;5;66;03m# If we have a listlike key, _check_indexing_erro
+r will raise\u001b[39;00m\n\u001b[0;32m   3815\u001b[0m     \u001b[38;5;66;03m#  InvalidIndexError. Otherwise we fall t
+hrough and re-raise\u001b[39;00m\n\u001b[0;32m   3816\u001b[0m     \u001b[38;5;66;03m#  the TypeError.\u001b[39;00m\n\u
+001b[0;32m   3817\u001b[0m     \u001b[38;5;28mself\u001b[39m\u001b[38;5;241m.\u001b[39m_check_indexing_error(key)\n",
+      "\u001b[1;31mKeyError\u001b[0m: 'director'"
+     ]
+    }
+   ],
+   "source": [
+    "# Q2-3: 감독(director)�??�품 ??TOP5 출력\n",
+    "df['director'].value_counts().head(5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5603eee5-0fb4-4b4e-b84a-dd8815b372e0",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.13.5"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
+
+
+
+
+```
+
+---
+
+## Assistant (Build · DeepSeek V4 Flash Free · 8.0s)
+
+_Thinking:_
+
+Now I see the problem clearly. Looking at cell In[16]:
+
+```python
+# Q2-3: 감독(director)별 작품 수 TOP5 출력
+df['director'].value_counts().head(5)
+```
+
+The error is a KeyError for 'director'. Let me check what happened:
+
+Earlier in the notebook, the user had two DataFrames:
+- `df` = iris data (loaded from iris.csv)
+- `df1` = netflix data (loaded from netflix.csv)
+
+The problem is that in cell In[16], they used `df['director']` but `df` is the iris DataFrame which doesn't have a 'director' column! The netflix data was stored in `df1`.
+
+The fix is simple: change `df['director']` to `df1['director']`.
+
+Also, looking at Q2-1, they wrote `df1.value_counts` which is wrong - it should be `df1['type'].value_counts()`. The `.value_counts()` needs to be called on a Series, not a DataFrame. Well actually, `df1.value_counts` without parentheses just returns the method itself (as seen in the output - it shows `<bound method...`), which means they forgot the parentheses too.
+
+Let me give them the fix.
+
+**원인 찾았다.** 16번 셀 보면:
+
+```python
+df['director'].value_counts().head(5)   # 🔴 df는 iris 데이터야!
+```
+
+`df`는 위에서 `pd.read_csv('iris.csv')` 로 불러온 거고,  
+넷플릭스 데이터는 `df1 = pd.read_csv('netflix.csv')` 로 불러놨잖아.
+
+**고치는 법:** `df` → `df1`
+
+```python
+df1['director'].value_counts().head(5)   # ✅
+```
+
+그리고 13번 셀도 틀렸다:
+```python
+df1.value_counts       # 🔴 이건 메서드 자체만 출력함
+```
+```python
+df1['type'].value_counts()   # ✅ 괄호까지 써야 실행됨
+```
+
+---
+
+지금까지 한 상황:
+- **Q1**: iris → **완료** (info, groupby mean, bar plot까지 잘함)
+- **Q2-1**: type별 개수 → **틀림** (`value_counts` 사용법)
+- **Q2-2**: TV Show 필터 → **완료**
+- **Q2-3**: director별 TOP5 → **틀림** (df vs df1 혼동)
+
+**고치고 다시 실행해봐. 바로 말해.**
 
 ---
 
